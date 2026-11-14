@@ -1,0 +1,26 @@
+{
+    "format": 1,
+    "produkt": "IT Mappe",
+    "kanal": "stable",
+    "erzeugt": "2026-11-14T21:05:12Z",
+    "versionen": [
+        {
+            "version": "1.2.0",
+            "datum": "2026-11-14",
+            "image": "ghcr.io/rdcoon/it-mappe@sha256:c070ae198d811a32e740d74aeea9b597ae56913bcdd8ba5967bbe81a1965fd68",
+            "min_von": null,
+            "haltepunkt": false,
+            "sicherheit": false,
+            "migrationen": {
+                "mandant": "048_update_auftraege",
+                "plattform": "012_updates"
+            },
+            "server_schritte": [],
+            "voraussetzungen": {},
+            "zurueck_ohne_ruecksicherung": false,
+            "neu": "Schwerpunkt: Updates über den Betreiber-Bereich. Ab dieser Version bekommt die Produktion neue Versionen nur noch als signiertes Release über den Update-Dienst, mit „Was ist neu“, Upgrade-Pfad, Probelauf und Zurückrollen.\n\n### Neu\n\n- Updates, Teil 1 (Schritt 40a): Neuer Workflow „Release“ macht aus einem Tag `v1.2.0` eine signierte Version mit Upgrade-Probe von älteren Versionen. Migrationen bekommen eine Prüfsumme (nachträglich geänderte werden erkannt), und ist die Datenbank neuer als der laufende Code (z. B. nur das Image zurückgedreht), zeigt das Portal eine Wartungsseite statt mit falschem Schema weiterzuarbeiten. Selbsttest `php bin/health.php` und `GET /health`. Anleitung docs/UPDATES.md\n- Updates, Teil 2 (Schritt 40b): Update-Dienst für den Server (`itmappe-update`, eingerichtet mit `vorlagen/update/install.sh`). Er spielt nur signierte Versionen ein, macht vorher einen Probelauf auf einer Kopie der Datenbanken, schaltet währenddessen den Wartungsmodus ein (Portal, API und Cronjobs pausieren) und rollt bei einem Fehler automatisch zurück. Übersprungene Versionen werden über den Upgrade-Pfad nacheinander eingespielt. Fehler bei Migrationen werden jetzt mit Grund ausgegeben\n- Updates, Teil 3 (Schritt 40c): Seite „Updates“ im Betreiber-Bereich (bei Einzel-Installationen unter Verwaltung → Updates). Zeigt installierte und verfügbare Versionen, „Was ist neu“ für alle übersprungenen Versionen, den Upgrade-Pfad, eine Vorprüfung, Server-Schritte für DEV und PROD, Fortschritt mit Protokoll und den Verlauf. Einspielen sofort oder geplant (mit Hinweis-Balken für alle Mandanten 24 Stunden vorher), Abbrechen und Zurückrollen, jeweils mit 2FA-Code. Neues Recht „Updates“ je Betreiber-Konto. E-Mail und Teams-Nachricht bei neuer Version und nach jedem Update. Anleitung docs/UPDATES.md, Abschnitte 11 und 12\n- Updates, Teil 4 (Schritt 40d): Die Produktion wird nicht mehr bei jedem Merge in `main` eingespielt. Der Workflow „Cloud“ heißt jetzt „Main“ und prüft nur noch (Tests und Image-Probe), der alte Plesk-Workflow „Deploy“ ist entfernt. Der Update-Dienst aktualisiert nach jedem Update die Vorlagen in `/opt/itmappe/vorlagen` und nimmt Sicherheitsupdates für Caddy und MariaDB mit, wie bisher der Workflow. Liegt ein neueres Programm des Dienstes bereit, zeigt die Seite „Updates“ einen Hinweis. Workflows auf Node 24 umgestellt (keine Node-20-Warnungen mehr). Anleitung docs/UPDATES.md, Abschnitte 13 und 14",
+            "sicherheit_text": "",
+            "vor_dem_update": "- Ab dieser Version kommen neue Versionen nur noch über die Seite „Updates“ (oder `sudo itmappe-update installieren`). Ein Merge in `main` spielt nichts mehr ein. Den Self-hosted Runner `itmappe-prod` danach abbauen (docs/UPDATES.md, Abschnitt 13)."
+        }
+    ]
+}
