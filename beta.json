@@ -1,0 +1,26 @@
+{
+    "format": 1,
+    "produkt": "IT Mappe",
+    "kanal": "beta",
+    "erzeugt": "2026-11-14T13:32:15Z",
+    "versionen": [
+        {
+            "version": "1.2.0-beta.1",
+            "datum": "2026-11-14",
+            "image": "ghcr.io/rdcoon/it-mappe@sha256:fd982c962b4af1dcebd16ea04784fb6e532f4435be02adf5850eb743aef17311",
+            "min_von": null,
+            "haltepunkt": false,
+            "sicherheit": false,
+            "migrationen": {
+                "mandant": "047_telefonie_3cx_abgleich",
+                "plattform": "011_github_uebergabe"
+            },
+            "server_schritte": [],
+            "voraussetzungen": {},
+            "zurueck_ohne_ruecksicherung": false,
+            "neu": "Vorabversion zum Testen des neuen Update-Wegs auf DEV (Kanal beta).\n\n### Neu\n\n- Updates, Teil 1 (Schritt 40a): Neuer Workflow „Release“ macht aus einem Tag `v1.2.0` eine signierte Version mit Upgrade-Probe von älteren Versionen. Migrationen bekommen eine Prüfsumme (nachträglich geänderte werden erkannt), und ist die Datenbank neuer als der laufende Code (z. B. nur das Image zurückgedreht), zeigt das Portal eine Wartungsseite statt mit falschem Schema weiterzuarbeiten. Selbsttest `php bin/health.php` und `GET /health`. Anleitung docs/UPDATES.md\n- Updates, Teil 2 (Schritt 40b): Update-Dienst für den Server (`itmappe-update`, eingerichtet mit `vorlagen/update/install.sh`). Er spielt nur signierte Versionen ein, macht vorher einen Probelauf auf einer Kopie der Datenbanken, schaltet währenddessen den Wartungsmodus ein (Portal, API und Cronjobs pausieren) und rollt bei einem Fehler automatisch zurück. Übersprungene Versionen werden über den Upgrade-Pfad nacheinander eingespielt. Fehler bei Migrationen werden jetzt mit Grund ausgegeben",
+            "sicherheit_text": "",
+            "vor_dem_update": ""
+        }
+    ]
+}
