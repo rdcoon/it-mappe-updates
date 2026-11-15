@@ -2,8 +2,26 @@
     "format": 1,
     "produkt": "IT Mappe",
     "kanal": "stable",
-    "erzeugt": "2026-11-14T21:05:12Z",
+    "erzeugt": "2026-11-15T17:21:47Z",
     "versionen": [
+        {
+            "version": "1.3.0",
+            "datum": "2026-11-15",
+            "image": "ghcr.io/rdcoon/it-mappe@sha256:529aede096c542060105272626b95c7697ee561505863ccf786c4ffd331d6adb",
+            "min_von": null,
+            "haltepunkt": false,
+            "sicherheit": false,
+            "migrationen": {
+                "mandant": "051_mail_texte_inhaber",
+                "plattform": "013_mail_vorlagen"
+            },
+            "server_schritte": [],
+            "voraussetzungen": {},
+            "zurueck_ohne_ruecksicherung": false,
+            "neu": "Schwerpunkt: eigene E-Mail-Gestaltung und -Texte (Schritt 36) für Mandanten, Freelancer im Verbund und den Betreiber-Bereich.\n\n### Neu\n\n- E-Mail-Design (Schritt 36a): Unter Verwaltung → E-Mail-Design stellen Administratoren Logo (Größe, Position, eigenes E-Mail-Logo), Kopfzeile, Hauptfarbe, Hintergrund, Schrift, Signatur und Fußzeile aller Mails ein, mit Live-Vorschau und Test-E-Mail. Dasselbe im Betreiber-Bereich für die Mails der Plattform. Neuer Mail-Rahmen mit Tabellen-Layout (Outlook) und fester Darstellung im Dunkelmodus\n- E-Mail-Vorlagen (Schritt 36b): Unter Verwaltung → E-Mail-Vorlagen lassen sich Betreff und Text von Einladung, Passwort-Mail und Monatsbericht anpassen, mit Platzhaltern (Pflichtprüfung), Vorschau und Test-E-Mail mit Beispieldaten, Zurücksetzen auf Standard und Verlauf der letzten 20 Fassungen. Neues Recht „E-Mail-Vorlagen“ (Administratoren automatisch). Die Monatsbericht-Texte sind aus Berichte → Einstellungen hierher umgezogen; ein eigener Text gilt weiter\n- Ticket-Mails (Schritt 36c): Antworten an Kunden, Eingangsbestätigung und „Ticket gelöst“ kommen jetzt im Mail-Rahmen (Logo, Farben, Signatur, Fußzeile) statt als reiner Text und lassen sich unter Verwaltung → E-Mail-Vorlagen anpassen (Pflicht: `{ticketnummer}` im Betreff). Die Bewertungslinks sind anklickbare Links. Auch die Ticket-Hinweise an Techniker kommen im Rahmen, mit Schaltfläche „Zum Ticket“\n- E-Mail-Auftritt im Freelancer-Verbund (Schritt 36e, Teil 1): Inhaber richten unter Mein Profil → E-Mail-Auftritt Firmenname, Logo, Farbe, Antwortadresse, Signatur und Fußzeile ein. Ticket-Mails, Monatsberichte und Einladungen für Kundenzugänge an ihre Kunden tragen dann diesen Auftritt (Absendername und Antwortadresse inklusive, Versandweg bleibt beim Mandanten). Administratoren sehen unter E-Mail-Design, wer einen eigenen Auftritt hat\n- Eigene E-Mail-Texte im Verbund (Schritt 36e, Teil 2): Inhaber legen unter Mein Profil → E-Mail-Auftritt für jede Mailart eigenen Betreff und Text für ihre Kunden fest (mit Vorschau, Test-Mail und Verlauf), sonst gilt der Text des Mandanten\n- Plattform-Mails im Betreiber-Bereich (Schritt 36d): Betreff und Text von Registrierung, Einladung neuer Mandanten, Zahlung fehlgeschlagen, Antwort auf eine Meldung und „Bekanntes Problem behoben“ sind unter Betreiber-Bereich → E-Mail-Vorlagen anpassbar. Neu: Standard-Design für neue Mandanten (Logo als Start-Logo, Farbe, Schrift, neutrale Fußzeile), mit dem jeder neue Mandant startet\n- 2FA neu einrichten: Unter Mein Profil → Zwei-Faktor-Anmeldung gibt es „2FA neu einrichten“ (mit Passwort bestätigen, neuer QR-Code, Code bestätigen, danach neue Wiederherstellungscodes). Die bisherige 2FA gilt bis zur Bestätigung weiter, danach sind alter Schlüssel und alte Codes ungültig. Bisher ging das für Rollen mit 2FA-Pflicht nur über einen Admin oder die Kommandozeile. Dasselbe im Betreiber-Bereich unter „Passwort und Zwei-Faktor“ (Klick auf den eigenen Namen oben rechts)\n\n### Behoben\n\n- Datensicherung im Betreiber-Bereich: „Arbeitsordner für die Sicherung nicht anlegbar … storage/cache/backup/_plattform“ (Fehler F-9R5A). Die Cronjobs laufen im Container als root und legten den Ordner so an, dass der Webserver darin nichts mehr anlegen durfte. Als root angelegte Ordner und Dateien unter storage/ gehören jetzt sofort www-data, der Container repariert storage/cache beim Start, und die Meldung nennt Besitzer und Reparaturbefehl. Anleitung docs/DATENSICHERUNG.md Abschnitt 9",
+            "sicherheit_text": "",
+            "vor_dem_update": ""
+        },
         {
             "version": "1.2.0",
             "datum": "2026-11-14",
@@ -16,7 +34,7 @@
                 "plattform": "012_updates"
             },
             "server_schritte": [],
-            "voraussetzungen": {},
+            "voraussetzungen": [],
             "zurueck_ohne_ruecksicherung": false,
             "neu": "Schwerpunkt: Updates über den Betreiber-Bereich. Ab dieser Version bekommt die Produktion neue Versionen nur noch als signiertes Release über den Update-Dienst, mit „Was ist neu“, Upgrade-Pfad, Probelauf und Zurückrollen.\n\n### Neu\n\n- Updates, Teil 1 (Schritt 40a): Neuer Workflow „Release“ macht aus einem Tag `v1.2.0` eine signierte Version mit Upgrade-Probe von älteren Versionen. Migrationen bekommen eine Prüfsumme (nachträglich geänderte werden erkannt), und ist die Datenbank neuer als der laufende Code (z. B. nur das Image zurückgedreht), zeigt das Portal eine Wartungsseite statt mit falschem Schema weiterzuarbeiten. Selbsttest `php bin/health.php` und `GET /health`. Anleitung docs/UPDATES.md\n- Updates, Teil 2 (Schritt 40b): Update-Dienst für den Server (`itmappe-update`, eingerichtet mit `vorlagen/update/install.sh`). Er spielt nur signierte Versionen ein, macht vorher einen Probelauf auf einer Kopie der Datenbanken, schaltet währenddessen den Wartungsmodus ein (Portal, API und Cronjobs pausieren) und rollt bei einem Fehler automatisch zurück. Übersprungene Versionen werden über den Upgrade-Pfad nacheinander eingespielt. Fehler bei Migrationen werden jetzt mit Grund ausgegeben\n- Updates, Teil 3 (Schritt 40c): Seite „Updates“ im Betreiber-Bereich (bei Einzel-Installationen unter Verwaltung → Updates). Zeigt installierte und verfügbare Versionen, „Was ist neu“ für alle übersprungenen Versionen, den Upgrade-Pfad, eine Vorprüfung, Server-Schritte für DEV und PROD, Fortschritt mit Protokoll und den Verlauf. Einspielen sofort oder geplant (mit Hinweis-Balken für alle Mandanten 24 Stunden vorher), Abbrechen und Zurückrollen, jeweils mit 2FA-Code. Neues Recht „Updates“ je Betreiber-Konto. E-Mail und Teams-Nachricht bei neuer Version und nach jedem Update. Anleitung docs/UPDATES.md, Abschnitte 11 und 12\n- Updates, Teil 4 (Schritt 40d): Die Produktion wird nicht mehr bei jedem Merge in `main` eingespielt. Der Workflow „Cloud“ heißt jetzt „Main“ und prüft nur noch (Tests und Image-Probe), der alte Plesk-Workflow „Deploy“ ist entfernt. Der Update-Dienst aktualisiert nach jedem Update die Vorlagen in `/opt/itmappe/vorlagen` und nimmt Sicherheitsupdates für Caddy und MariaDB mit, wie bisher der Workflow. Liegt ein neueres Programm des Dienstes bereit, zeigt die Seite „Updates“ einen Hinweis. Workflows auf Node 24 umgestellt (keine Node-20-Warnungen mehr). Anleitung docs/UPDATES.md, Abschnitte 13 und 14",
             "sicherheit_text": "",
