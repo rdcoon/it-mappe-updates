@@ -2,8 +2,26 @@
     "format": 1,
     "produkt": "IT Mappe",
     "kanal": "stable",
-    "erzeugt": "2026-11-16T16:21:37Z",
+    "erzeugt": "2026-11-16T17:24:19Z",
     "versionen": [
+        {
+            "version": "1.4.2",
+            "datum": "2026-11-16",
+            "image": "ghcr.io/rdcoon/it-mappe@sha256:ed3d55de10c83f275edb464213d3a7a6f4497faf4b77af6bee609181dfb919b9",
+            "min_von": null,
+            "haltepunkt": false,
+            "sicherheit": false,
+            "migrationen": {
+                "mandant": "060_standorte_journal",
+                "plattform": "014_speicher"
+            },
+            "server_schritte": [],
+            "voraussetzungen": {},
+            "zurueck_ohne_ruecksicherung": false,
+            "neu": "### Behoben\n\n- Ticket anlegen schlug auf manchen Servern mit Fehler F-RSXS fehl: Die SLA-Berechnung nutzte für die Feiertage (Ostern) eine PHP-Funktion der Erweiterung „calendar“, die dort nicht installiert ist. Ostern wird jetzt selbst berechnet, ein Test verhindert solche Funktionen künftig. Keine Migration",
+            "sicherheit_text": "",
+            "vor_dem_update": ""
+        },
         {
             "version": "1.4.1",
             "datum": "2026-11-16",
@@ -16,7 +34,7 @@
                 "plattform": "014_speicher"
             },
             "server_schritte": [],
-            "voraussetzungen": {},
+            "voraussetzungen": [],
             "zurueck_ohne_ruecksicherung": false,
             "neu": "### Neu\n\n- Linkes Menü in der Kundenmappe: Nach der Kundenauswahl stehen die Bereiche des Kunden (gruppiert wie die Register) auch am Desktop wieder links im Menü. „Alle Kunden & Übergreifendes“ ist dann eingeklappt und merkt sich den Zustand\n- Geräteseite: Knopf „In NinjaOne öffnen“ oben neben „In RDM öffnen“, „Verlauf“ und „Bearbeiten“ (nur bei Geräten aus NinjaOne und aktiver App NinjaOne)\n- Standort an Lizenzen, Verträgen, Dienstleistern, Tickets und Dateien des Kunden: Die Auswahl erscheint nur, wenn der Kunde mehrere Standorte hat (wie bisher bei der Zeiterfassung). Neue Tickets ohne Auswahl übernehmen den Standort des Geräts oder Ansprechpartners. Die Standortseite zeigt unter „Außerdem an diesem Standort“, was ihm zugeordnet ist. Migration 060\n- Journal je Standort, Lizenz, Vertrag, Datei und Dienstleister: Im Journal-Eintrag „Bezieht sich auf“ wählt man außer einem Gerät jetzt auch diese Ziele. Die Einträge stehen auf der jeweiligen Seite (Standort, Lizenz, Vertrag, neue Seiten „Details & Journal“ je Datei und „Journal“ je Dienstleister) mit Knopf „Neuer Eintrag“, der Journal-Filter des Kunden kennt alle Bezüge. Wird das Ziel gelöscht, bleibt der Eintrag als allgemeiner Eintrag erhalten. Migration 060\n- CSV-Import für Standorte: im Kunden unter Standorte → „Importieren (CSV)“ oder für mehrere Kunden unter Verwaltung → Inhalte → Import (CSV) mit Kundennummer. Spalten wie im Formular (Bezeichnung, Telefon, Straße, PLZ, Ort, Land, Zugang vor Ort, Notizen), ein Standort gilt bei gleicher Bezeichnung beim selben Kunden als vorhanden. Vorlage, Anleitung und Rückgängig wie bei den anderen Arten. Keine Migration",
             "sicherheit_text": "",
