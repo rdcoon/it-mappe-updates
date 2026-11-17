@@ -2,8 +2,26 @@
     "format": 1,
     "produkt": "IT Mappe",
     "kanal": "stable",
-    "erzeugt": "2026-11-16T17:24:19Z",
+    "erzeugt": "2026-11-17T13:47:26Z",
     "versionen": [
+        {
+            "version": "1.5.0",
+            "datum": "2026-11-17",
+            "image": "ghcr.io/rdcoon/it-mappe@sha256:4409d8be6f96c48ae597c47cae73dc39dc84b676f989e4f7e5b27a3c250e2c8d",
+            "min_von": null,
+            "haltepunkt": false,
+            "sicherheit": false,
+            "migrationen": {
+                "mandant": "065_avv",
+                "plattform": "015_editionen"
+            },
+            "server_schritte": [],
+            "voraussetzungen": {},
+            "zurueck_ohne_ruecksicherung": false,
+            "neu": "Schwerpunkte: Scan-Box für die Bestandsaufnahme beim Kunden, AV-Verträge mit Unterschrift im Portal und die Editionen IT Mappe Service und Inhouse.\n\n### Neu\n\n- Scan-Box (Schritt 27): Ein Raspberry Pi, der zeitweise beim Kunden im Netz steckt, meldet sich selbst beim Portal (nur ausgehend HTTPS), scannt das Netz und legt die Funde in den Eingang Kunde → Geräte → „Neu gefunden“. Per SNMP liest sie Modell, Seriennummer, Netze und Nachbarn für den Netzplan, auf Wunsch das Active Directory (nur lesend). Einsätze je Kunde, mehrere Boxen, Regeln, Selbst-Update mit signierter Box-Software und Hinweis „meldet sich nicht“. Als App unter Verwaltung → Apps → Scan-Box aktivierbar. Anleitung docs/SCANBOX.md, Migrationen 061 bis 064, keine Server-Schritte\n- Editionen (Schritt 45): IT Mappe gibt es jetzt als **IT Mappe Service** für IT-Dienstleister (wie bisher) und **IT Mappe Inhouse** für die interne IT einer Firma. Inhouse hat genau eine Firma, die immer gewählt ist („Unser Unternehmen“ im Menü), ohne Kundenliste und Kundenwahl, ohne Zeiterfassung und Abrechnung, Monatsbericht, AV-Verträge, Kundenlogin, Kundengruppen, Freelancer-Verbund und die Apps Lexware/orgaMAX. Die Edition wählt der Betreiber je Mandant (neu anlegen, Mandantenseite → Edition, `bin/tenant.php create --edition=inhouse`) oder der Kunde bei der Registrierung („Wofür nutzt ihr IT Mappe?“). Umschalten löscht nichts. Bestehende Mandanten bleiben Service. Die Seite „Version und Lizenz“ nennt die Edition. Konzept docs/KONZEPT-45.md, Anleitung docs/EDITIONEN.md, Plattform-Migration 015, keine Server-Schritte\n- AV-Verträge mit den Kunden (Schritt 44): Vertrag nach Art. 28 DSGVO per Assistent aus den Daten der Mappe (Leistungen, Daten, Betroffene, Unterauftragsverarbeiter), Vorlagen mit Fassungen und Platzhaltern, PDF mit Anlagen. Unterschrift im Portal ohne Drittanbieter: Auftragnehmer mit Zwei-Faktor-Code, Kunde über Link mit Code per E-Mail oder im Kundenlogin, Prüfprotokoll und öffentliche Prüfseite für das PDF, Erinnerungen nach 7 und 21 Tagen. Eigene Angaben (Firma, TOM, Unterauftragsverarbeiter) im Verbund je Inhaber unter Mein Profil → Firma und Datenschutz, sonst unter Verwaltung → AV-Verträge. „Wird auch betreut von“ beim Kunden nimmt mitbetreuende Freelancer in den Vertrag auf. Mitteilung neuer Unterauftragsverarbeiter mit Widerspruch per Link. Ansprechpartner mit „Darf Verträge unterschreiben“. Anleitung docs/AVV.md, Migration 065. Auf DEV einmalig eine Basic-Auth-Ausnahme für /unterschreiben/* (Anleitung)\n\n### Verbessert\n\n- Dienstleister: Die Standortauswahl erscheint schon ab einem Standort des Kunden und steht direkt hinter dem Aufgabengebiet. Keine Migration\n- Ticket-Postfach über Microsoft 365: Hinweis auf die nötige Anwendungsberechtigung Mail.ReadWrite im Formular deutlich sichtbar, Anleitungen docs/E-MAIL.md und docs/TICKETS.md ergänzt (auch für eine eigene App nur für das Ticket-Postfach und für RBAC). Keine Server-Schritte",
+            "sicherheit_text": "",
+            "vor_dem_update": ""
+        },
         {
             "version": "1.4.2",
             "datum": "2026-11-16",
@@ -16,7 +34,7 @@
                 "plattform": "014_speicher"
             },
             "server_schritte": [],
-            "voraussetzungen": {},
+            "voraussetzungen": [],
             "zurueck_ohne_ruecksicherung": false,
             "neu": "### Behoben\n\n- Ticket anlegen schlug auf manchen Servern mit Fehler F-RSXS fehl: Die SLA-Berechnung nutzte für die Feiertage (Ostern) eine PHP-Funktion der Erweiterung „calendar“, die dort nicht installiert ist. Ostern wird jetzt selbst berechnet, ein Test verhindert solche Funktionen künftig. Keine Migration",
             "sicherheit_text": "",
