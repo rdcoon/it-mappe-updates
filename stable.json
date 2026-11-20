@@ -2,8 +2,26 @@
     "format": 1,
     "produkt": "IT Mappe",
     "kanal": "stable",
-    "erzeugt": "2026-11-20T13:39:21Z",
+    "erzeugt": "2026-11-20T14:42:05Z",
     "versionen": [
+        {
+            "version": "1.7.1",
+            "datum": "2026-11-20",
+            "image": "ghcr.io/rdcoon/it-mappe@sha256:48cc6e8c9a557208f247594810c4e93d2a0497071b797f4063c0193b04766199",
+            "min_von": null,
+            "haltepunkt": false,
+            "sicherheit": false,
+            "migrationen": {
+                "mandant": "069_monitoring_34b",
+                "plattform": "015_editionen"
+            },
+            "server_schritte": [],
+            "voraussetzungen": {},
+            "zurueck_ohne_ruecksicherung": false,
+            "neu": "### Behoben\n\n- App installieren: Hatte ein Mandant ein eigenes Favicon oder Logo als App-Symbol, blieb das Symbol im Edge-Fenster „Web-App installieren“ leer und Edge meldete „Page has no manifest <link> URL“. Ursache war der Sicherheits-Header `Cross-Origin-Resource-Policy: same-origin` an Manifest und App-Symbol, der Edges eigene Installationsseite aussperrte. Manifest, `/app-symbol/…` und das Favicon dürfen jetzt auch von dort gelesen werden (öffentlich, ohne Kundendaten). Mit dem mitgelieferten Symbol trat der Fehler nicht auf. Keine Migration, keine Server-Schritte",
+            "sicherheit_text": "",
+            "vor_dem_update": ""
+        },
         {
             "version": "1.7.0",
             "datum": "2026-11-20",
@@ -16,7 +34,7 @@
                 "plattform": "015_editionen"
             },
             "server_schritte": [],
-            "voraussetzungen": {},
+            "voraussetzungen": [],
             "zurueck_ohne_ruecksicherung": false,
             "neu": "Schwerpunkte: Monitoring mit Checkmk (Stand, Inventur, Wartungen, Verfügbarkeit im Bericht) und IT Mappe als installierbare App.\n\n### Neu\n\n- Monitoring anbinden, zuerst Checkmk (Schritt 34a): Neue App **Checkmk**. IT Mappe überwacht weiterhin nichts selbst, liest aber aus Checkmk (nur lesend, REST-API ab 2.3, eigener Automationsbenutzer), welche Hosts es gibt und wie es ihnen geht, und ordnet sie den Geräten zu: automatisch über IP-Adresse, Name oder Hostname, wenn genau ein Gerät passt, sonst auf der neuen Seite **Hosts** von Hand, mit **Ignorieren** oder **Als neues Gerät anlegen**. Für dein eigenes Checkmk mit vielen Kunden ordnest du unter **Zuordnung** die Checkmk-Ordner den Kunden zu (Unterordner erben). Der Stand kommt alle 5 Minuten. Am Gerät zeigt die neue Karte **Überwachung** den Stand (in Ordnung, Warnung, kritisch, ausgefallen, unerreichbar, Wartung) mit den Diensten, die gerade melden, die **Verfügbarkeit** der letzten 30 Tage und des Monats (Ausfälle in einer Wartung zählen nicht) und die letzten **Ausfälle** mit Dauer. Neuer Startseiten-Baustein **Aktuell gestört**. Kommt 24 Stunden kein Stand, steht dort „Stand unsicher“. Der Kern ist anbieterneutral, weitere Systeme (Zabbix, PRTG, Webhook) kommen als eigene Adapter. Anleitung docs/MONITORING.md, Migration 068. Server: auf PROD optional den Cronjob `bin/sync.php` von 15 auf 5 Minuten stellen (Befehl in der Anleitung), auf DEV nichts\n- Monitoring ausgebaut (Schritt 34b): Die **Inventur** aus Checkmk füllt leere Gerätefelder (Hersteller, Modell, Seriennummer, Firmware, Betriebssystem, MAC), Gepflegtes bleibt. **Wartungen** aus Checkmk stehen vorab am Gerät und im Kalender-Link. Am Gerät lässt sich ein **Dienst als Erreichbarkeit** eintragen (z. B. „HTTPS Webshop“). **Ausfälle aus NinjaOne, Meraki und FortiGate** landen bei Firewalls, Switches, Servern, NAS & Co. in derselben Ausfall-Liste. Je Ausfall eine **Notiz** und **ins Journal** per Klick. Neuer Monatsbericht-Baustein **Verfügbarkeit** mit dem neuen Feld **Verfügbarkeitsziel** im Vertrag, neue Steckbrief-Maßnahme **Kritische Systeme werden überwacht**. „Stand unsicher“ geht einmal per E-Mail an die Admins, auf Wunsch kommt ein Ausfall über 4 Stunden in Teams. Migration 069, keine Server-Schritte\n- IT Mappe als App installieren: Das Portal lässt sich in Edge und Chrome unter Windows und Linux (und auf dem Handy) als eigene App installieren, mit eigenem Fenster ohne Adressleiste, Symbol in Taskleiste und Startmenü und Sprungzielen (Suche, Kunden, Startseite) per Rechtsklick. Jeder Mandant ist eine eigene App mit Portalname und Symbol aus Verwaltung → Design. Knopf **Als App installieren** oben rechts und unter Mein Profil. Ohne Verbindung erscheint eine Hinweisseite, Kundendaten werden nie auf dem Gerät gespeichert (der Service Worker legt nur mitgelieferte Dateien unter /assets/ ab). Anleitung docs/APP.md, keine Migration. Server: auf PROD nichts, auf DEV eine Ausnahme vom Basic-Auth in der Caddyfile\n\n### Verbessert\n\n- Anleitung zur Webex-Einrichtung ausführlicher: alle Schritte auf developer.webex.com (Onboard Service App, Scopes, Request Admin Authorization, Org Authorizations) und im Control Hub (Apps → Dienst-Apps) mit den typischen Stolperstellen, in docs/WEBEX.md, der Hilfeseite und auf der Einrichtungsseite. Keine Migration, keine Server-Schritte\n\n### Behoben\n\n- Schwachstellen-Prüfung: Liefert eine Quelle ein leeres Datum (z. B. WPVulnerability bei manchen Elementor-Lücken mit „0000-00-00“), brach der Abruf mit „SQLSTATE[22007] Incorrect datetime value '-0001-11-30'“ ab und der ganze Lauf stand auf „Fehler“. Leere oder unsinnige Datumswerte werden jetzt als leer gespeichert, für WPVulnerability, NVD, KEV, Fortinet und Microsoft. Der Fehler verschwindet mit dem nächsten Lauf von selbst. Keine Migration, keine Server-Schritte",
             "sicherheit_text": "",
